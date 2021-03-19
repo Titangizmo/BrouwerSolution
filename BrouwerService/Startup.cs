@@ -36,6 +36,7 @@ namespace BrouwerService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BrouwerService", Version = "v1" });
                 c.EnableAnnotations();
             });
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +60,7 @@ namespace BrouwerService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader());
             });
         }
     }
