@@ -3,6 +3,7 @@ using BrouwerService.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +18,26 @@ namespace BrouwerService.Controllers
         private readonly IBrouwerRepository repository;
         public BrouwerController(IBrouwerRepository repository)
         { this.repository = repository; }
+
         [HttpGet]
+        [SwaggerOperation("Alle brouwers")]
         public async Task<ActionResult> FindAll() => base.Ok(await repository.FindAllAsync());
+
         [HttpGet("{id}")]
+        [SwaggerOperation("Brouwer waarvan je de id kent")]
         public async Task<ActionResult> FindById(int id)
         {
             var brouwer = await repository.FindByIdAsync(id);
             return brouwer == null ? base.NotFound() : base.Ok(brouwer);
         }
-        [
-      HttpGet("naam")]
+
+        [ HttpGet("naam")]
+        [SwaggerOperation("Brouwers waarvan je het begin van de naam kent")]
         public async Task<ActionResult> FindByBeginNaam(string begin) =>
       base.Ok(await repository.FindByBeginNaamAsync(begin));
+
         [HttpDelete("{id}")]
+        [SwaggerOperation("Brouwer verwijderen")]
         public async Task<ActionResult> Delete(int id)
         {
             var brouwer = await repository.FindByIdAsync(id);
@@ -40,8 +48,9 @@ namespace BrouwerService.Controllers
             await repository.DeleteAsync(brouwer);
             return base.Ok();
         }
-        [
-      HttpPost]
+
+        [ HttpPost]
+        [SwaggerOperation("Brouwer toevoegen")]
         public async Task<ActionResult> Post(Brouwer brouwer)
         {
             if (this.ModelState.IsValid)
@@ -51,8 +60,9 @@ namespace BrouwerService.Controllers
             }
             return base.BadRequest(this.ModelState);
         }
-        [
-      HttpPut("{id}")]
+
+        [ HttpPut("{id}")]
+        [SwaggerOperation("Brouwer wijzigen")]
         public async Task<ActionResult> Put(int id, Brouwer brouwer)
         {
             if (this.ModelState.IsValid)
