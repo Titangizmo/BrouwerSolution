@@ -17,10 +17,10 @@ namespace BrouwerService.Controllers
     public class BrouwerController : ControllerBase
     {
         private readonly IBrouwerRepository repository;
-        private readonly IHttpClientFactory clientFactory;
-        public BrouwerController(IBrouwerRepository repository, IHttpClientFactory clientFactory)
+        //private readonly IHttpClientFactory clientFactory;
+        public BrouwerController(IBrouwerRepository repository/*, IHttpClientFactory clientFactory*/)
         { this.repository = repository;
-            this.clientFactory = clientFactory;
+            //this.clientFactory = clientFactory;
         }
 
         [HttpGet]
